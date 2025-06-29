@@ -1,0 +1,105 @@
+\chapter{مفاهیم پایه و تعاریف}
+\label{chap:basics}
+
+در این فصل، مفاهیم و تعاریف اولیه‌ای که در سراسر این جزوه به آن‌ها نیاز خواهیم داشت را مرور می‌کنیم.
+
+\section{تعریف گراف}
+\label{def:graph}
+به طور رسمی، یک \textbf{گراف} $G$ یک سه‌تایی مرتب $G=(V, E, \psi)$ است که در آن:
+\begin{itemize}
+	\item $V$ یک مجموعه متناهی و ناتهی از عناصر به نام \textbf{رئوس} (\lr{Vertices}) است.
+	\item $E$ یک مجموعه متناهی (و مجزا از $V$) از عناصر به نام \textbf{یال‌ها} (\lr{Edges}) است.
+	\item $\psi$ یک \textbf{تابع وقوع} (\lr{incidence function}) است که هر یال را به یک زوج (نامرتب) از رئوس نگاشت می‌دهد.
+\end{itemize}
+
+\subsection{طوقه (\lr{Loop})}
+اگر برای یک یال $e$، دو سر آن یکسان باشند، یعنی $\psi(e) = \{u, u\}$، آنگاه $e$ را یک \textbf{طوقه} می‌نامیم.
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}[vertex/.style={draw, circle, thick, font=\sffamily}]
+		\node[vertex] (u) at (0,0) {u};
+		\path (u) edge [loop above] node[above] {$e$} (u);
+	\end{tikzpicture}
+	\caption{نمایش یک طوقه $e$ روی رأس $u$.}
+\end{figure}
+
+\subsection{یال‌های موازی (\lr{Parallel Edges})}
+اگر دو یال مختلف $e_1$ و $e_2$ دو سر یکسانی داشته باشند، آن دو را \textbf{یال‌های موازی} می‌گوییم.
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}[vertex/.style={draw, circle, thick, font=\sffamily}]
+		\node[vertex] (u) at (0,0) {u};
+		\node[vertex] (v) at (2.5,0) {v};
+		\path (u) edge [bend left=40] node[above] {$e_1$} (v)
+		(u) edge [bend right=40] node[below] {$e_2$} (v);
+	\end{tikzpicture}
+	\caption{نمایش دو یال موازی بین رئوس $u$ و $v$.}
+\end{figure}
+
+\subsection{گراف ساده (\lr{Simple Graph})}
+گرافی که هیچ طوقه و یال موازی نداشته باشد، \textbf{گراف ساده} نامیده می‌شود.
+
+\subsection{گراف جهت‌دار (\lr{Directed Graph})}
+در \textbf{گراف جهت‌دار}، تابع وقوع هر یال را به یک \textbf{زوج مرتب} از رئوس نگاشت می‌دهد: $\psi: E \to (V \times V)$.
+
+\section{نمایش گراف در کامپیوتر}
+\label{sec:graph_representation}
+برای پیاده‌سازی الگوریتم‌های گراف، باید گراف را به شیوه‌ای کارآمد در حافظه کامپیوتر ذخیره کنیم. دو روش متداول برای این کار ماتریس مجاورت و لیست مجاورت هستند.
+
+\subsection{ماتریس مجاورت (\lr{Adjacency Matrix})}
+یک ماتریس $n \times n$ (که $n = |V|$) به نام $A$ است که در آن درایه $A_{ij}$ برابر ۱ است اگر یالی بین رأس $i$ و رأس $j$ وجود داشته باشد و در غیر این صورت برابر ۰ است. این روش برای گراف‌های متراکم کارآمد است.
+
+\subsection{لیست مجاورت (\lr{Adjacency List})}
+\label{def:adj_list}
+یک آرایه از لیست‌ها به اندازه $n$ است که در آن، خانه $i$-ام آرایه، لیستی از همسایگان رأس $i$ را نگهداری می‌کند. این روش برای گراف‌های خلوت (که تعداد یال‌ها بسیار کمتر از $n^2$ است) بسیار بهینه‌تر است.
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}[vertex/.style={draw, circle, thick, font=\sffamily}, scale=0.9, every node/.style={scale=0.9}]
+		\node[vertex] (1) at (0, 1.5) {1};
+		\node[vertex] (2) at (-1.5, 0) {2};
+		\node[vertex] (3) at (1.5, 0) {3};
+		\path[-, thick] (1) edge (2) (1) edge (3) (2) edge (3);
+		\node at (0, -1) {(a) گراف نمونه};
+		
+		\begin{scope}[xshift=5cm]
+			\node[draw, minimum width=1cm] (l1) at (0, 2) {1};
+			\node[draw, minimum width=1cm] (l2) at (0, 1) {2};
+			\node[draw, minimum width=1cm] (l3) at (0, 0) {3};
+			\path[->, thick] (l1) edge (1,2); \node[draw] at (1.5,2) {2}; \path[->, thick] (1.5,2) edge (2.5,2); \node[draw] at (3,2) {3};
+			\path[->, thick] (l2) edge (1,1); \node[draw] at (1.5,1) {1}; \path[->, thick] (1.5,1) edge (2.5,1); \node[draw] at (3,1) {3};
+			\path[->, thick] (l3) edge (1,0); \node[draw] at (1.5,0) {1}; \path[->, thick] (1.5,0) edge (2.5,0); \node[draw] at (3,0) {2};
+			\node at (1.5, -1) {(b) نمایش با لیست مجاورت};
+		\end{scope}
+	\end{tikzpicture}
+	\caption{یک گراف و نمایش آن با لیست مجاورت.}
+\end{figure}
+
+\section{صف (\lr{Queue})}
+\label{def:queue}
+یک \textbf{صف} یک ساختمان داده خطی است که از اصل \textbf{ورودی اول، خروجی اول} (\lr{First-In, First-Out - FIFO}) پیروی می‌کند. دو عمل اصلی روی صف عبارتند از:
+\begin{itemize}
+	\item \textbf{\lr{Enqueue}:} افزودن یک عنصر به \textbf{انتهای} صف (\lr{Rear}).
+	\item \textbf{\lr{Dequeue}:} حذف یک عنصر از \textbf{ابتدای} صف (\lr{Front}).
+\end{itemize}
+این رفتار در شکل \ref{fig:queue_diagram} به صورت گرافیکی نمایش داده شده است.
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}[
+		box/.style={draw, thick, minimum width=1.2cm, minimum height=1.2cm, font=\Large},
+		arrow/.style={single arrow, draw, thick, single arrow head extend=5pt}
+		]
+		\node[box] (q1) at (0,0) {A};
+		\node[box] (q2) at (1.2,0) {B};
+		\node[box] (q3) at (2.4,0) {C};
+		\node[above=3mm of q1] (front) {جلو \lr{(Front)}};
+		\node[above=3mm of q3] (rear) {عقب \lr{(Rear)}};
+		\node[arrow, fill=red!20, minimum height=1.5cm, rotate=-90] at (0, -1.2) {};
+		\node[below=1.25cm of q1] {\lr{Dequeue}};
+		\node[arrow, fill=green!20, minimum height=1.5cm, rotate=-180] at (4, 0) {};
+		\node[] at (4,-0.6) {\lr{Enqueue}};
+	\end{tikzpicture}
+	\caption{نمایش گرافیکی یک صف و عملیات اصلی آن.}
+	\label{fig:queue_diagram}
+\end{figure}

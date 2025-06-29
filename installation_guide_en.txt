@@ -1,0 +1,22 @@
+================================
+--- Installation Guide (English) ---
+================================
+
+To run the Python scripts for this course, you need to install a few libraries. This file will guide you through the simple installation process.
+
+**Prerequisite:**
+Ensure that you have Python and its package manager, pip, installed on your system.
+
+**Recommended Method (Install from requirements file):**
+
+1. Open your terminal or Command Prompt in the same directory where the `requirements.txt` file is located.
+2. Enter and run the following command:
+
+pip install -r requirements.txt
+
+This command will automatically install all the libraries listed in the file with compatible versions.
+
+**Alternative Method (Manual Installation):**
+If the method above does not work for any reason, you can install the libraries manually one by one with the following command:
+
+pip install networkx matplotlib Pillow

@@ -1,0 +1,108 @@
+% !TEX program = xelatex
+\documentclass[12pt, a4paper]{book}
+
+%---------------------------------------------------
+% Page Layout and Margins (geometry package)
+%---------------------------------------------------
+\usepackage[
+a4paper,
+twoside,  % فعال‌سازی چیدمان دوطرفه برای کتاب
+top=2.5cm,
+bottom=3cm,
+inner=3cm,  % حاشیه داخلی (سمت صحافی) - باید بزرگتر باشد
+outer=2cm,  % حاشیه خارجی
+headheight=14.5pt, % فضایی برای سرصفحه، برای جلوگیری از اخطار
+% showframe  % <<< برای مشاهده بصری کادرها (در نسخه نهایی حذف شود)
+]{geometry}
+
+
+%---------------------------------------------------
+% Main Packages
+%---------------------------------------------------
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+
+%---------------------------------------------------
+% Algorithm and Pseudocode Packages
+%---------------------------------------------------
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode} 
+
+%---------------------------------------------------
+% TikZ package for drawing graphs
+%---------------------------------------------------
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, graphs, shapes.arrows}
+
+%---------------------------------------------------
+% Title Formatting Package
+%---------------------------------------------------
+\usepackage{titlesec}
+% Define a custom length for title separation
+\newcommand{\mytitlesep}{4pt} % مقدار فاصله به درخواست شما تغییر کرد
+
+% Configuration for section titles using the custom length
+\titleformat{\section}{\normalfont\Large\bfseries}{\thesection)}{\mytitlesep}{}
+\titleformat{\subsection}{\normalfont\large\bfseries}{\thesubsection)}{\mytitlesep}{}
+\titleformat{\subsubsection}{\normalfont\normalsize\bfseries}{\thesubsubsection)}{\mytitlesep}{}
+
+% Modern package for caption control and fixing hyperlink targets
+\usepackage{caption}
+\captionsetup{hypcap=true}
+
+%---------------------------------------------------
+% Hyperlink package
+%---------------------------------------------------
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+%---------------------------------------------------
+% Farsi language support (MUST be loaded last)
+%---------------------------------------------------
+\usepackage{xepersian}
+
+%---------------------------------------------------
+% Font Definitions
+%---------------------------------------------------
+\settextfont{XB Niloofar}
+\setlatintextfont{Times New Roman}
+
+%---------------------------------------------------
+% Custom environment for LTR pseudocode
+%---------------------------------------------------
+\newenvironment{pseudocode}{%
+	\begin{latin}
+		\begin{algorithmic}[1]
+		}{%
+		\end{algorithmic}
+	\end{latin}
+}
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+
+
+%---------------------------------------------------
+% Document Information
+%---------------------------------------------------
+\title{درس‌نامه الگوریتم‌های گراف}
+\author{
+	نویسنده: محمد جواد عبدالهی
+	\\ \\
+	\large{با نظارت: دکتر بهناز عمومی}
+}
+\date{\today}
+
+
+\begin{document}
+	\setcounter{chapter}{-1} % This line starts chapter numbering from 0
+	
+	\maketitle
+	\tableofcontents
+	
+	% Include chapters from separate files
+	\include{chapter0}
+	\include{chapter1}
+	% \include{chapter2}
+	% ... and so on
+	
+\end{document}
